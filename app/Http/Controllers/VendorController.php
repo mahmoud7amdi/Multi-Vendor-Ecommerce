@@ -78,6 +78,8 @@ class VendorController extends Controller
             'new_password' => 'required|confirmed',
         ]);
 
+        //hello
+
         if(!Hash::check($request->old_password,auth::user()->password)){
             return back()->with("error","Old Password Doesn't Match");
         }
