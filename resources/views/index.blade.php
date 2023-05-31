@@ -236,7 +236,7 @@
 
                                             <div class="row">
                                                 <div class="form-group col-md-12">
-                                                    <label>Old Password <span class="required">*</span></label>
+                                                    <label>Old Password <span class="required"></span></label>
                                                     <input required="" class="form-control" name="old_password" type="password" id="current_password" placeholder="old_password" @error('old_password') is-invalid @enderror  />
                                                     @error('old_password')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -245,7 +245,7 @@
 
 
                                                 <div class="form-group col-md-12">
-                                                    <label>New Password <span class="required">*</span></label>
+                                                    <label>New Password <span class="required"></span></label>
                                                     <input required="" class="form-control" name="new_password" id="new_password" placeholder="New Password"  type="password"  @error('new_password') is-invalid @enderror  />
                                                     @error('new_password')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -254,7 +254,7 @@
 
 
                                                 <div class="form-group col-md-12">
-                                                    <label>Confirm New Password <span class="required">*</span></label>
+                                                    <label>Confirm New Password <span class="required"></span></label>
                                                     <input required="" class="form-control" name="new_password_confirmation" id="new_password_confirmation" placeholder="Confirm New Password"  type="password"   />
 
                                                 </div>
