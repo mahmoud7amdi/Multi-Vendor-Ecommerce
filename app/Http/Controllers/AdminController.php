@@ -83,4 +83,52 @@ class AdminController extends Controller
         ]);
         return back()->with("status","Password Changed Successfully");
     }
+
+    public function InactiveVendor()
+    {
+        $InactiveVendor = User::where('status','inactive')->where('role','vendor')->latest()->get();
+        return view('backend.vendor.inactive_vendor',compact('InactiveVendor'));
+    }
+    public function ActiveVendor()
+    {
+        $ActiveVendor = User::where('status','active')->where('role','vendor')->latest()->get();
+        return view('backend.vendor.active_vendor',compact('ActiveVendor'));
+    }
+
+    public function InactiveVendorDetails($id)
+    {
+        $inactiveVendorDetails = User::findOrfail($id);
+        return view('backend.vendor.inactive_vendor_details',compact('inactiveVendorDetails'));
+    }
+    public function ActiveVendorApprove(Request $request)
+    {
+        $vendor_id = $request->id ;
+        $user = User::findOrfail($vendor_id)->update([
+            'status' => 'active',
+        ]);
+        $notification = array(
+            'message' => 'Vendor Active Successfully',
+            'alert_type' => 'success'
+        );
+        return redirect()->route('active.vendor')->with($notification);
+    }
+
+    public function ActiveVendorDetails($id)
+    {
+        $activeVendorDetails = User::findOrfail($id);
+        return view('backend.vendor.active_vendor_details',compact('activeVendorDetails'));
+    }
+
+    public function InactiveVendorApprove(Request $request)
+    {
+        $vendor_id = $request->id ;
+        $user = User::findOrfail($vendor_id)->update([
+            'status' => 'inactive',
+        ]);
+        $notification = array(
+            'message' => 'Vendor Inactive Successfully',
+            'alert_type' => 'success'
+        );
+        return redirect()->route('inactive.vendor')->with($notification);
+    }
 }
