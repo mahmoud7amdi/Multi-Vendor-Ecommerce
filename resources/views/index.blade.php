@@ -173,6 +173,7 @@
 
                                         <form method="post" action="{{ route('user.profile.store') }}" enctype="multipart/form-data">
                                             @csrf
+                                            @method('Put')
                                             <div class="row">
                                                 <div class="form-group col-md-6">
                                                     <label>User Name <span class="required">*</span></label>
@@ -222,7 +223,9 @@
                                     <div class="card-body">
 
                                         <form method="post" action="{{ route('user.update.password') }}" >
+
                                             @csrf
+
 
                                             @if(session('status'))
                                                 <div class="alert alert-success" role="alert">

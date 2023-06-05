@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\MultiImage;
+use App\Models\Product;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Intervention\Image\Facades\Image;
 
 class SubCategoryController extends Controller
 {
@@ -67,4 +71,14 @@ class SubCategoryController extends Controller
         return redirect()->back()->with($notification);
 
     }
+
+    public function GetSubcategory($category_id)
+    {
+        $subcat = SubCategory::where('category_id', $category_id)->orderBy('subcategory_name','ASC')->get();
+
+        return json_encode($subcat);
+
+    }
+
+
 }
