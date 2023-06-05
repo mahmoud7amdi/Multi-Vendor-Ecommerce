@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\SubCategoryController ;
 use App\Http\Controllers\Backend\PeoductController ;
 use  App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\VendorPeoductController ;
+use App\Http\Controllers\Backend\SliderController ;
 
 /*
 |--------------------------------------------------------------------------
@@ -185,7 +186,18 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
 
 
+    Route::controller(SliderController::class)->group(function (){
+        Route::get('all/slider','AllSlider')->name('all.slider');
+        Route::get('add/slider','AddSlider')->name('add.slider');
+        Route::post('store/slider','StoreSlider')->name('store.slider');
+        Route::get('edit/slider/{id}','EditSlider')->name('edit.slider');
+        Route::put('update/slider','UpdateSlider')->name('update.slider');
+        Route::get('delete/slider/{id}','DeleteSlider')->name('delete.slider');
 
+
+
+
+    });
 
 
 
