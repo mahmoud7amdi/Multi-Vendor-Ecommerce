@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\CategoryController ;
 use App\Http\Controllers\Backend\SubCategoryController ;
 use App\Http\Controllers\Backend\PeoductController ;
 use  App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Controllers\Backend\VendorPeoductController ;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,24 @@ Route::middleware(['auth','role:vendor'])->group(function (){
     Route::post('vendor/update/password',[VendorController::class,'VendorUpdatePassword'])->name('vendor.update.password');
 
 
+    Route::controller(VendorPeoductController::class)->group(function (){
+        Route::get('all/vendor/product','AllVendorProduct')->name('vendor.all.product');
+        Route::get('add/vendor/product','AddVendorProduct')->name('vendor.add.product');
+        Route::post('vendor/store/product','VendorStoreProducts')->name('vendor.store.product');
+        Route::get('edit/vendor/product/{id}','EditVendorProduct')->name('edit.vendor.product');
+        Route::put('update/vendor/product','UpdateVendorProduct')->name('update.vendor.product');
+        Route::put('update/vendor/product/thumbnail','UpdateVendorProductThumbnail')->name('update.vendor.product.thumbnail');
+        Route::put('update/vendor/product/multiImage','UpdateVendorProductMultiImage')->name('update.vendor.product.multiImage');
+        Route::get('delete/vendor/product/multiImage/{id}','DeleteVendorProductMultiImage')->name('delete.vendor.multiImage.product');
+        Route::get('vendor/product/inactive/{id}','VendorProductInactive')->name('vendor.product.inactive');
+        Route::get('vendor/product/active/{id}','VendorProductActive')->name('vendor.product.active');
+        Route::get('vendor/product/delete/{id}','ProductVendorDelete')->name('delete.vendor.product');
+        Route::get('vendor/subcategory/ajax/{category_id}','VendorGetSubcategory');
+
+
+
+
+    });
 
 
 
