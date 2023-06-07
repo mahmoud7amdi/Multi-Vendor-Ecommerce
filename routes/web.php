@@ -12,6 +12,8 @@ use App\Http\Controllers\Backend\PeoductController ;
 use  App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\VendorPeoductController ;
 use App\Http\Controllers\Backend\SliderController ;
+use App\Http\Controllers\Backend\BannerController ;
+use App\Http\Controllers\Frontend\IndexController ;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,9 +109,10 @@ Route::middleware(['auth','role:vendor'])->group(function (){
 
 
 
-
+// All Admin group routes
 Route::middleware(['auth','role:admin'])->group(function (){
 
+// All Brand routes
     Route::controller(BrandController::class)->group(function (){
         Route::get('all/brand','AllBrand')->name('all.brand');
         Route::get('add/brand','AddBrand')->name('add.brand');
@@ -121,6 +124,10 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
     });
 
+
+
+
+// All Category routes
     Route::controller(CategoryController::class)->group(function (){
         Route::get('all/category','AllCategory')->name('all.category');
         Route::get('add/category','AddCategory')->name('add.category');
@@ -134,6 +141,9 @@ Route::middleware(['auth','role:admin'])->group(function (){
     });
 
 
+
+
+// All SubCategory routes
     Route::controller(SubCategoryController::class)->group(function (){
         Route::get('all/subcategory','AllSubCategory')->name('all.subCategory');
         Route::get('add/subcategory','AddSubCategory')->name('add.subCategory');
@@ -148,7 +158,7 @@ Route::middleware(['auth','role:admin'])->group(function (){
     });
 
 
-
+// All Admin routes
     Route::controller(AdminController::class)->group(function (){
         Route::get('inactive/vendor','InactiveVendor')->name('inactive.vendor');
         Route::get('active/vendor','ActiveVendor')->name('active.vendor');
@@ -165,7 +175,7 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
 
 
-
+// All Product routes
     Route::controller(PeoductController::class)->group(function (){
         Route::get('all/product','AllProduct')->name('all.product');
         Route::get('add/product','AddProduct')->name('add.product');
@@ -185,7 +195,7 @@ Route::middleware(['auth','role:admin'])->group(function (){
     });
 
 
-
+// All Slider routes
     Route::controller(SliderController::class)->group(function (){
         Route::get('all/slider','AllSlider')->name('all.slider');
         Route::get('add/slider','AddSlider')->name('add.slider');
@@ -201,10 +211,40 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
 
 
+// All Banner routes
+    Route::controller(BannerController::class)->group(function (){
+        Route::get('all/banner','AllBanner')->name('all.banner');
+        Route::get('add/banner','AddBanner')->name('add.banner');
+        Route::post('store/banner','StoreBanner')->name('store.banner');
+        Route::get('edit/banner/{id}','EditBanner')->name('edit.banner');
+        Route::put('update/banner','UpdateBanner')->name('update.banner');
+        Route::get('delete/banner/{id}','DeleteBanner')->name('delete.banner');
 
+
+
+
+    });
 
 
 });
+
+//product Details Frontend Route
+
+Route::get('product/details/{id}/{slug}',[IndexController::class,'ProductDetails']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Route::get('admin/login', [AdminController::class,'AdminLogin'])->middleware(RedirectIfAuthenticated::class);

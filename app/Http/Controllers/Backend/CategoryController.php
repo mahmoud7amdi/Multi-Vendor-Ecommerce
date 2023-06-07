@@ -22,9 +22,9 @@ class CategoryController extends Controller
     public function StoreCategory(Request $request)
     {
         $image = $request->file('category_image');
-        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
         Image::make($image)->resize(120,120)->save('upload/category/'.$name_gen);
-        $save_url =' upload/category/'.$name_gen ;
+        $save_url ='upload/category/'.$name_gen ;
         Category::insert([
             'category_name' => $request->category_name,
             'category_slug' => strtolower(str_replace(' ', '-', $request->category_name)),
