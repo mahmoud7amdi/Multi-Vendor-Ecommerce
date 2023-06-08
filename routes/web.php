@@ -231,6 +231,10 @@ Route::middleware(['auth','role:admin'])->group(function (){
 //product Details Frontend Route
 
 Route::get('product/details/{id}/{slug}',[IndexController::class,'ProductDetails']);
+Route::get('product/details/{id}',[IndexController::class,'VendorDetails'])->name('vendor.details');
+Route::get('all/vendor',[IndexController::class,'AllVendor'])->name('vendor.all');
+Route::get('product/category/{id}/{slug}',[IndexController::class,'CatWithProduct']);
+Route::get('product/subcategory/{id}/{slug}',[IndexController::class,'SubCatWithProduct']);
 
 
 

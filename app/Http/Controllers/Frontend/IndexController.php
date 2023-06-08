@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\MultiImage;
 use App\Models\Product;
+use App\Models\SubCategory;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -42,5 +44,37 @@ class IndexController extends Controller
 
 
         return view('frontend.product.product_details',compact('product','product_color','product_size','multiImage','relatedProduct'));
+    }
+
+
+    public function VendorDetails($id)
+    {
+        $vendor = User::findOrFail($id);
+        $vproduct = Product::where('vendor_id',$id)->get();
+        return view('frontend.vendor.vendor_details',compact('vproduct','vendor'));
+    }
+
+    public function AllVendor()
+    {
+        $vendors = User::where('status','active')->where('role','vendor')->orderBy('id','DESC')->get();
+        return view('frontend.vendor.all_vendor',compact('vendors'));
+    }
+
+    public function CatWithProduct(Request $request , $id , $slug)
+    {
+        $products = Product::where('status',1)->where('category_id',$id)->orderBy('id','DESC')->get();
+        $categories = Category::orderBy('category_name','ASC')->get();
+        $breadcat = Category::where('id',$id)->first();
+        $newproduct = Product::orderBy('id','DESC')->limit(3)->get();
+        return view('frontend.product.category_view',compact('products','categories','breadcat','newproduct'));
+    }
+
+    public function SubCatWithProduct(Request $request , $id , $slug)
+    {
+        $products = Product::where('status',1)->where('subcategory_id',$id)->orderBy('id','DESC')->get();
+        $categories = Category::orderBy('category_name','ASC')->get();
+        $breadsubcat = SubCategory::where('id',$id)->first();
+        $newproduct = Product::orderBy('id','DESC')->limit(3)->get();
+        return view('frontend.product.subcategory_view',compact('products','categories','breadsubcat','newproduct'));
     }
 }
