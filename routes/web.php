@@ -50,6 +50,9 @@ Route::middleware(['auth'])->group(function (){
 });
 
 
+//Route::get('allData',[VendorController::class,'Data']);
+
+
 
 
 
@@ -78,7 +81,7 @@ Route::middleware(['auth','role:vendor'])->group(function (){
     Route::post('vendor/profile/store',[VendorController::class,'VendorProfileStore'])->name('vendor.profile.store');
     Route::get('Vendor/change/password',[VendorController::class,'VendorChangePassword'])->name('vendor.change.password');
     Route::post('vendor/update/password',[VendorController::class,'VendorUpdatePassword'])->name('vendor.update.password');
-
+    Route::get('vendor',[VendorController::class.'VendorController']);
 
     Route::controller(VendorPeoductController::class)->group(function (){
         Route::get('all/vendor/product','AllVendorProduct')->name('vendor.all.product');
@@ -93,6 +96,7 @@ Route::middleware(['auth','role:vendor'])->group(function (){
         Route::get('vendor/product/active/{id}','VendorProductActive')->name('vendor.product.active');
         Route::get('vendor/product/delete/{id}','ProductVendorDelete')->name('delete.vendor.product');
         Route::get('vendor/subcategory/ajax/{category_id}','VendorGetSubcategory');
+        Route::get('all/vendor','AllVendor');
 
 
 
@@ -235,6 +239,7 @@ Route::get('product/details/{id}',[IndexController::class,'VendorDetails'])->nam
 Route::get('all/vendor',[IndexController::class,'AllVendor'])->name('vendor.all');
 Route::get('product/category/{id}/{slug}',[IndexController::class,'CatWithProduct']);
 Route::get('product/subcategory/{id}/{slug}',[IndexController::class,'SubCatWithProduct']);
+Route::get('/product/view/modal/{id}',[IndexController::class,'ProductViewAjax']);
 
 
 
@@ -252,9 +257,10 @@ Route::get('product/subcategory/{id}/{slug}',[IndexController::class,'SubCatWith
 
 
 Route::get('admin/login', [AdminController::class,'AdminLogin'])->middleware(RedirectIfAuthenticated::class);
-Route::get('vendor/login', [VendorController::class,'VendorLogin'])->name('vendor.login')->middleware(RedirectIfAuthenticated::class);;
+Route::get('vendor/login', [VendorController::class,'VendorLogin'])->name('vendor.login')->middleware(RedirectIfAuthenticated::class);
 Route::get('become/vendor', [VendorController::class,'BecomeVendor'])->name('become.vendor');
 Route::post('vendor/register', [VendorController::class,'VendorRegister'])->name('vendor.register');
+
 
 
 

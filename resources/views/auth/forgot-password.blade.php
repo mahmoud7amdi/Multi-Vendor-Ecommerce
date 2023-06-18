@@ -49,7 +49,7 @@
                                         <div class="form-group">
                                             <input type="email" id="email" required="" name="email" placeholder="Email" />
                                         </div>
-                                        \
+
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-heading btn-block hover-up" name="login">Email Password Reset Link</button>
                                         </div>

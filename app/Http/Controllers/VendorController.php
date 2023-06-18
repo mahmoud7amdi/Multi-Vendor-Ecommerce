@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use http\Env\Response;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,8 +17,19 @@ class VendorController extends Controller
     {
         return view('vendor.index');
     }
-
-
+//    public function VendorController()
+//    {
+//        $venndor = User::where('role','vendor')->orderBy('id','DESC')->get();
+//        return response()->json(['message'=>$venndor]);
+//    }
+//    public function Data()
+//     {
+//         $data = [
+//             'name' => 'mahmoud',
+//             'age' => '25'
+//         ];
+//         return response()->json(['message'=>$data]);
+//     }
     public function VendorLogin()
     {
         return view('vendor.vendor_login');
@@ -39,7 +51,7 @@ class VendorController extends Controller
     {
         $id = Auth::user()->id;
         $vendordata = User::find($id);
-        return view('vendor.vendor_profile_view',compact('vendordata'));
+        return view('vendor.vendor_profile_view', compact('vendordata'));
     }
 
     public function VendorProfileStore(Request $request)
@@ -51,14 +63,14 @@ class VendorController extends Controller
         $data->phone = $request->phone;
         $data->address = $request->address;
         $data->vendor_join = $request->vendor_join;
-        $data->vendor_short_info = $request->vendor_short_info ;
+        $data->vendor_short_info = $request->vendor_short_info;
 
-        if($request->file('photo')){
+        if ($request->file('photo')) {
             $file = $request->file('photo');
-            @unlink(public_path('upload/vendor_images/'.$data->photo));
-            $filename = date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('upload/vendor_images'),$filename);
-            $data['photo'] = $filename ;
+            @unlink(public_path('upload/vendor_images/' . $data->photo));
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('upload/vendor_images'), $filename);
+            $data['photo'] = $filename;
         }
         $data->save();
         $notification = array(
@@ -82,13 +94,13 @@ class VendorController extends Controller
 
         //hello
 
-        if(!Hash::check($request->old_password,auth::user()->password)){
-            return back()->with("error","Old Password Doesn't Match");
+        if (!Hash::check($request->old_password, auth::user()->password)) {
+            return back()->with("error", "Old Password Doesn't Match");
         }
         User::whereId(auth()->user()->id)->update([
             'password' => Hash::make($request->new_password)
         ]);
-        return back()->with("status","Password Changed Successfully");
+        return back()->with("status", "Password Changed Successfully");
 
     }
 
@@ -101,7 +113,7 @@ class VendorController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed',],
         ]);
 
@@ -113,16 +125,22 @@ class VendorController extends Controller
             'vendor_join' => $request->vendor_join,
             'password' => Hash::make($request->password),
             'role' => 'vendor',
-            'status' => 'inactive' ,
+            'status' => 'inactive',
+
         ]);
+
         $notification = array(
             'message' => 'Vendor registered Successfully',
             'alert_type' => 'success'
         );
+
         return redirect()->route('vendor.login')->with($notification);
 
 
     }
+
+
+
 
 
 }
