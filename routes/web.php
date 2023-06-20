@@ -14,6 +14,8 @@ use App\Http\Controllers\Backend\VendorPeoductController ;
 use App\Http\Controllers\Backend\SliderController ;
 use App\Http\Controllers\Backend\BannerController ;
 use App\Http\Controllers\Frontend\IndexController ;
+use App\Http\Controllers\Frontend\CartController ;
+use App\Http\Controllers\User\WishlistController ;
 
 /*
 |--------------------------------------------------------------------------
@@ -239,7 +241,29 @@ Route::get('product/details/{id}',[IndexController::class,'VendorDetails'])->nam
 Route::get('all/vendor',[IndexController::class,'AllVendor'])->name('vendor.all');
 Route::get('product/category/{id}/{slug}',[IndexController::class,'CatWithProduct']);
 Route::get('product/subcategory/{id}/{slug}',[IndexController::class,'SubCatWithProduct']);
+
+//product quick view
 Route::get('/product/view/modal/{id}',[IndexController::class,'ProductViewAjax']);
+//Add To Cart
+Route::post('cart/data/store/{id}',[CartController::class,'AddToCart']);
+
+Route::get('/product/mini/cart',[CartController::class,'AddMiniCart']);
+
+Route::get('/minicart/product/remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
+
+//Add To Cart Details
+Route::post('/dcart/data/store/{id}',[CartController::class,'AddToCartDetails']);
+
+Route::post('/add-to-wishlist/{product_id}',[WishlistController::class,'AddToWishlist']);
+
+
+Route::middleware(['auth','role:user'])->group(function (){
+    Route::controller(WishlistController::class)->group(function (){
+        Route::get('wishlist','AllWishlist')->name('wishlist');
+        Route::get('/get-wishlist-product','GetWishlistProduct');
+        Route::get('/wishlist-remove/{id}','WishlistRemove');
+    });
+});
 
 
 
