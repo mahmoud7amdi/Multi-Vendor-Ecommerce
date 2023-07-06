@@ -13,6 +13,8 @@ use  App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\VendorPeoductController ;
 use App\Http\Controllers\Backend\SliderController ;
 use App\Http\Controllers\Backend\BannerController ;
+use App\Http\Controllers\Backend\CouponController ;
+use App\Http\Controllers\Backend\ShippingAreaController ;
 use App\Http\Controllers\Frontend\IndexController ;
 use App\Http\Controllers\Frontend\CartController ;
 use App\Http\Controllers\User\WishlistController ;
@@ -233,6 +235,75 @@ Route::middleware(['auth','role:admin'])->group(function (){
     });
 
 
+
+// All Coupon routes
+    Route::controller(CouponController::class)->group(function (){
+        Route::get('all/coupon','AllCoupon')->name('all.coupon');
+        Route::get('add/coupon','AddCoupon')->name('add.coupon');
+        Route::post('store/coupon','StoreCoupon')->name('store.coupon');
+        Route::get('edit/coupon/{id}','EditCoupon')->name('edit.coupon');
+        Route::put('update/coupon','UpdateCoupon')->name('update.coupon');
+        Route::delete('delete/coupon/{id}','DeleteCoupon')->name('delete.coupon');
+
+
+
+
+    });
+
+
+
+
+
+    //  Shipping Division routes
+    Route::controller(ShippingAreaController::class)->group(function (){
+        Route::get('all/division','AllDivision')->name('all.division');
+        Route::get('add/division','AddDivision')->name('add.division');
+        Route::post('store/division','StoreDivision')->name('store.division');
+        Route::get('edit/division/{id}','EditDivision')->name('edit.division');
+        Route::put('update/division','UpdateDivision')->name('update.division');
+        Route::delete('delete/division/{id}','DeleteDivision')->name('delete.division');
+
+
+
+
+    });
+
+
+
+    //  Shipping District routes
+    Route::controller(ShippingAreaController::class)->group(function (){
+        Route::get('all/district','AllDistrict')->name('all.district');
+        Route::get('add/district','AddDistrict')->name('add.district');
+        Route::post('store/district','StoreDistrict')->name('store.district');
+        Route::get('edit/district/{id}','EditeDistrict')->name('edit.district');
+        Route::put('update/district','UpdateDistrict')->name('update.district');
+        Route::delete('delete/district/{id}','DeleteDistrict')->name('delete.district');
+
+
+
+
+    });
+
+
+
+
+    //  Shipping State routes
+    Route::controller(ShippingAreaController::class)->group(function (){
+        Route::get('all/state','AllState')->name('all.state');
+        Route::get('add/state','AddState')->name('add.state');
+        Route::post('store/state','StoreState')->name('store.state');
+        Route::get('edit/state/{id}','EditeState')->name('edit.state');
+        Route::put('update/state','UpdateState')->name('update.state');
+        Route::delete('delete/state/{id}','DeleteState')->name('delete.state');
+        Route::get('district/ajax/{division_id}','GetDistrict');
+
+
+
+
+    });
+
+
+
 });
 
 //product Details Frontend Route
@@ -278,6 +349,15 @@ Route::middleware(['auth','role:user'])->group(function (){
         Route::get('compare','AllCompare')->name('compare');
         Route::get('/get-compare-product','GetCompareProduct');
         Route::get('/compare-remove/{id}','CompareRemove');
+
+    });
+
+    Route::controller(CartController::class)->group(function (){
+        Route::get('mycart','MyCart')->name('mycart');
+        Route::get('/get-cart-product','GetCartProduct');
+        Route::get('/cart-remove/{rowId}','CartRemove');
+        Route::get('/cart-decrement/{rowId}','cartDecrement');
+        Route::get('/cart-increment/{rowId}','cartIncrement');
 
     });
 
