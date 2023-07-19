@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\IndexController ;
 use App\Http\Controllers\Frontend\CartController ;
 use App\Http\Controllers\User\WishlistController ;
 use App\Http\Controllers\User\CompareController ;
+use App\Http\Controllers\User\CheckoutController ;
 
 /*
 |--------------------------------------------------------------------------
@@ -331,11 +332,21 @@ Route::post('/add-to-wishlist/{product_id}',[WishlistController::class,'AddToWis
 Route::post('/add-to-compare/{product_id}',[CompareController::class,'AddToCompare']);
 
 
+Route::post('/coupon-apply',[CartController::class,'CouponApply']);
+Route::get('/coupon-calculation',[CartController::class,'CouponCalculation']);
+
+Route::get('/coupon-remove',[CartController::class,'CouponRemove']);
+
+//checkout page
+
+Route::get('/checkout',[CartController::class,'CheckoutCreate'])->name('checkout');
 
 
 
 
 Route::middleware(['auth','role:user'])->group(function (){
+
+
     Route::controller(WishlistController::class)->group(function (){
         Route::get('wishlist','AllWishlist')->name('wishlist');
         Route::get('/get-wishlist-product','GetWishlistProduct');
@@ -358,6 +369,13 @@ Route::middleware(['auth','role:user'])->group(function (){
         Route::get('/cart-remove/{rowId}','CartRemove');
         Route::get('/cart-decrement/{rowId}','cartDecrement');
         Route::get('/cart-increment/{rowId}','cartIncrement');
+
+    });
+
+    Route::controller(CheckoutController::class)->group(function (){
+        Route::get('district-get/ajax/{division_id}','DistrictGetAjax');
+        Route::get('state-get/ajax/{district_id}','StateGetAjax');
+        Route::post('checkout/store','CheckoutStore')->name('checkout.store');
 
     });
 

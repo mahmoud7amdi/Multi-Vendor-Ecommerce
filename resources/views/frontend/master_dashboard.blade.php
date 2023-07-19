@@ -87,6 +87,29 @@
 {{--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
 {{--<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    @if(Session::has('message'))
+    var type = "{{ Session::get('alert-type','info') }}"
+    switch(type){
+        case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+            break;
+
+        case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+            break;
+
+        case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+            break;
+
+        case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+            break;
+    }
+    @endif
+</script>
 
 
 <script type="text/javascript">
@@ -700,6 +723,7 @@
             dataType: 'json',
             url: "/cart-remove/"+id,
             success:function(data){
+                couponCalculation();
                 cart();
                 miniCart();
                 // Start Message
@@ -736,6 +760,7 @@
             dataType: 'json',
             url: "/cart-decrement/"+rowId,
             success:function (data) {
+                couponCalculation();
                 cart();
                 miniCart();
             }
@@ -748,12 +773,175 @@
             dataType: 'json',
             url: "/cart-increment/"+rowId,
             success:function (data) {
+                couponCalculation();
                 cart();
                 miniCart();
             }
         });
     }
 </script>
+
+<!--  ////////////// Start Apply Coupon ////////////// -->
+<script type="text/javascript">
+
+    function applyCoupon(){
+        var coupon_name = $('#coupon_name').val();
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            data: {coupon_name:coupon_name},
+
+            url: "/coupon-apply",
+
+            success:function(data){
+                couponCalculation();
+
+                if (data.validity == true) {
+                    $('#couponField').hide();
+                }
+
+
+                // Start Message
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                if ($.isEmptyObject(data.error)) {
+
+                    Toast.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: data.success,
+                    })
+
+                }else{
+
+                    Toast.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: data.error,
+                    })
+                }
+
+                // End Message
+
+
+            }
+        })
+    }
+
+    // Start CouponCalculation Method
+    function couponCalculation(){
+        $.ajax({
+            type: 'GET',
+            url: "/coupon-calculation",
+            dataType: 'json',
+            success:function(data){
+
+                if(data.total){
+                    $('#couponCallField').html(
+                        `<tr>
+                                        <td class="cart_total_label">
+                                            <h6 class="text-muted">Subtotal</h6>
+                                        </td>
+                                        <td class="cart_total_amount">
+                                            <h4 class="text-brand text-end">$${data.total}</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">
+                                            <h6 class="text-muted">Grand Total</h6>
+                                        </td>
+                                        <td class="cart_total_amount">
+                                            <h4 class="text-brand text-end">$${data.total}</h4>
+                                        </td>
+                                    </tr>`
+                    )
+                }else {
+                    $('#couponCallField').html(
+                        ` <tr>
+                                        <td class="cart_total_label">
+                                            <h6 class="text-muted">Subtotal</h6>
+                                        </td>
+                                        <td class="cart_total_amount">
+                                            <h6 class="text-brand text-end">$${data.subtotal}</h6>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">
+                                            <h6 class="text-muted">Coupon</h6>
+                                        </td>
+                                        <td class="cart_total_amount">
+                                            <h6 class="text-brand text-end">${data.coupon_name}<a type="submit" onclick="couponRemove()"><i class="fi-rs-trash"></i></a></h6>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">
+                                            <h6 class="text-muted">Discount Amount</h6>
+                                        </td>
+                                        <td class="cart_total_amount">
+                                            <h6 class="text-brand text-end">$${data.discount_amount}</h6>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">
+                                            <h6 class="text-muted">Grand Total</h6>
+                                        </td>
+                                        <td class="cart_total_amount">
+                                            <h6 class="text-brand text-end">${data.total_amount}</h6>
+                                        </td>
+                                    </tr>`
+                    )
+                }
+            }
+        })
+    }
+
+    couponCalculation();
+</script>
+
+<script type="text/javascript">
+    function couponRemove(){
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "/coupon-remove",
+            success:function(data){
+                couponCalculation();
+                $('#couponField').show();
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                if ($.isEmptyObject(data.error)) {
+
+                    Toast.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: data.success,
+                    })
+                }else{
+
+                    Toast.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: data.error,
+                    })
+                }
+                // End Message
+            }
+        })
+    }
+</script>
+<!--  ////////////// End Apply Coupon ////////////// -->
+
 
 
 </body>
