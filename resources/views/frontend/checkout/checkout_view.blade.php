@@ -29,10 +29,10 @@
 
                         <div class="row">
                             <div class="form-group col-lg-6">
-                                <input type="text" required="" name="Shipping_name" value="{{ Auth::user()->name }}">
+                                <input type="text" required="" name="shipping_name" value="{{ Auth::user()->name }}">
                             </div>
                             <div class="form-group col-lg-6">
-                                <input type="email" required="" name="Shipping_email" value="{{ Auth::user()->email }}">
+                                <input type="email" required="" name="shipping_email" value="{{ Auth::user()->email }}">
                             </div>
                         </div>
 
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
-                                <input required="" type="text" name="Shipping_phone" value="{{ Auth::user()->phone }}">
+                                <input required="" type="text" name="shipping_phone" value="{{ Auth::user()->phone }}">
                             </div>
                         </div>
 
@@ -184,7 +184,7 @@
                                         <h6 class="text-muted">Grand Total</h6>
                                     </td>
                                     <td class="cart_total_amount">
-                                        <h4 class="text-brand text-end">$12.31</h4>
+                                        <h4 class="text-brand text-end">${{ $cartTotal }}</h4>
                                     </td>
                                 </tr>
                             @endif
@@ -242,7 +242,7 @@
                         dataType:"json",
                         success:function(data){
                             $('select[name="district_id"]').html('');
-                            var d =$('select[name="district_id"]').empty();
+                            var d =$('select[name="state_id"]').empty();
                             $.each(data, function(key, value){
                                 $('select[name="district_id"]').append('<option value="'+ value.id + '">' + value.district_name + '</option>');
                             });
