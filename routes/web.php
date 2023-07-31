@@ -13,11 +13,14 @@ use  App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\VendorPeoductController ;
 use App\Http\Controllers\Backend\SliderController ;
 use App\Http\Controllers\Backend\BannerController ;
+use App\Http\Controllers\Backend\VendorOrderController ;
 use App\Http\Controllers\Backend\CouponController ;
+use App\Http\Controllers\Backend\OrderController ;
 use App\Http\Controllers\Backend\ShippingAreaController ;
 use App\Http\Controllers\Frontend\IndexController ;
 use App\Http\Controllers\Frontend\CartController ;
 use App\Http\Controllers\User\WishlistController ;
+use App\Http\Controllers\User\AllUserController ;
 use App\Http\Controllers\User\CompareController ;
 use App\Http\Controllers\User\CheckoutController ;
 use App\Http\Controllers\User\StripeController ;
@@ -80,6 +83,9 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
 
 
+
+
+
 //vendor Dashboard
 Route::middleware(['auth','role:vendor'])->group(function (){
     Route::get('vendor/dashboard',[VendorController::class,'VendorDashboard'])->name('vendor.dashboard');
@@ -103,8 +109,15 @@ Route::middleware(['auth','role:vendor'])->group(function (){
         Route::get('vendor/product/active/{id}','VendorProductActive')->name('vendor.product.active');
         Route::get('vendor/product/delete/{id}','ProductVendorDelete')->name('delete.vendor.product');
         Route::get('vendor/subcategory/ajax/{category_id}','VendorGetSubcategory');
-        Route::get('all/vendor','AllVendor');
+//        Route::get('all/vendor','AllVendor');
 
+
+
+
+    });
+
+    Route::controller(VendorOrderController::class)->group(function (){
+        Route::get('vendor/order','vendorOrder')->name('vendor.order');
 
 
 
@@ -304,6 +317,15 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
     });
 
+    Route::controller(OrderController::class)->group(function (){
+        Route::get('pending/order','pendingOrder')->name('pending.order');
+
+
+
+
+    });
+
+
 
 
 });
@@ -385,6 +407,18 @@ Route::middleware(['auth','role:user'])->group(function (){
 
         Route::post('stripe/order','StripeOrder')->name('stripe.order');
         Route::post('cash/order','CashOrder')->name('cash.order');
+
+    });
+
+
+    // User Dashboard
+    Route::controller(AllUserController::class)->group(function (){
+
+        Route::get('user/account/page','UserAccount')->name('user.account.page');
+        Route::get('user/change/password','UserChangPassword')->name('user.change.password');
+        Route::get('user/order/page','UserOrderPage')->name('user.order.page');
+        Route::get('user/order_details/{order_id}','UserOrderDetails') ;
+
 
     });
 
