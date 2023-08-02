@@ -17,6 +17,7 @@ use App\Http\Controllers\Backend\VendorOrderController ;
 use App\Http\Controllers\Backend\CouponController ;
 use App\Http\Controllers\Backend\OrderController ;
 use App\Http\Controllers\Backend\ShippingAreaController ;
+use App\Http\Controllers\Backend\ReturnController ;
 use App\Http\Controllers\Frontend\IndexController ;
 use App\Http\Controllers\Frontend\CartController ;
 use App\Http\Controllers\User\WishlistController ;
@@ -118,6 +119,9 @@ Route::middleware(['auth','role:vendor'])->group(function (){
 
     Route::controller(VendorOrderController::class)->group(function (){
         Route::get('vendor/order','vendorOrder')->name('vendor.order');
+        Route::get('vendor/return/order','vendorReturnOrder')->name('vendor.return.order');
+        Route::get('vendor/complete/return/order','vendorCompleteReturnOrder')->name('vendor.complete.return.order');
+        Route::get('vendor/order/details/{order_id}','vendorOrderDetails')->name('vendor.order.details');
 
 
 
@@ -333,6 +337,17 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
     });
 
+    Route::controller(ReturnController::class)->group(function (){
+        Route::get('return/request','ReturnRequest')->name('return.request');
+        Route::get('return/request/approved/{order_id}','ReturnRequestApproved')->name('return.request.approved');
+        Route::get('complete/return/request','CompleteReturnRequest')->name('complete.return.request');
+
+
+
+
+
+    });
+
 
 
 
@@ -427,6 +442,8 @@ Route::middleware(['auth','role:user'])->group(function (){
         Route::get('user/order/page','UserOrderPage')->name('user.order.page');
         Route::get('user/order_details/{order_id}','UserOrderDetails') ;
         Route::get('user/invoice_download/{order_id}','UserOrderInvoice') ;
+        Route::post('return/order/{order_id}','ReturnOrder')->name('return.order');
+        Route::get('return/order/Page','ReturnOrderPage')->name('return.order.page');
 
 
     });
