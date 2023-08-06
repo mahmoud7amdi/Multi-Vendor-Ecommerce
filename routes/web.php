@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\BrandController ;
 use App\Http\Controllers\Backend\CategoryController ;
 use App\Http\Controllers\Backend\SubCategoryController ;
 use App\Http\Controllers\Backend\PeoductController ;
+use App\Http\Controllers\Backend\BlogController ;
 use  App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\VendorPeoductController ;
 use App\Http\Controllers\Backend\SliderController ;
@@ -369,6 +370,31 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
 
     });
+
+
+
+    Route::controller(BlogController::class)->group(function (){
+        Route::get('admin/blog/category','AllBlogCategory')->name('admin.blog.category');
+        Route::get('add/blog/category','AddBlogCategory')->name('add.blog.category');
+        Route::post('store/blog/category','StoreBlogCategory')->name('store.blog.category');
+        Route::get('edit/blog/category/{id}','EditBlogCategory')->name('edit.blog.category');
+        Route::post('update/blog/category','UpdateBlogCategory')->name('update.blog.category');
+        Route::get('delete/blog/category/{id}','DeleteBlogCategory')->name('delete.blog.category');
+
+    });
+
+
+
+    Route::controller(BlogController::class)->group(function (){
+        Route::get('admin/blog/post','AllBlogPost')->name('admin.blog.post');
+        Route::get('add/blog/post','AddBlogPost')->name('add.blog.post');
+        Route::post('store/blog/post','StoreBlogPost')->name('store.blog.post');
+        Route::get('edit/blog/post/{id}','EditBlogPost')->name('edit.blog.post');
+        Route::post('update/blog/post','UpdateBlogPost')->name('update.blog.post');
+        Route::get('delete/blog/post/{id}','DeleteBlogPost')->name('delete.blog.post');
+
+    });
+
 
 
 
