@@ -26,6 +26,7 @@ use App\Http\Controllers\Frontend\CartController ;
 use App\Http\Controllers\User\WishlistController ;
 use App\Http\Controllers\User\AllUserController ;
 use App\Http\Controllers\User\CompareController ;
+use App\Http\Controllers\User\ReviewController ;
 use App\Http\Controllers\User\CheckoutController ;
 use App\Http\Controllers\User\StripeController ;
 
@@ -126,6 +127,13 @@ Route::middleware(['auth','role:vendor'])->group(function (){
         Route::get('vendor/complete/return/order','vendorCompleteReturnOrder')->name('vendor.complete.return.order');
         Route::get('vendor/order/details/{order_id}','vendorOrderDetails')->name('vendor.order.details');
 
+
+
+    });
+
+
+    Route::controller(ReviewController::class)->group(function (){
+        Route::get('vendor/all/review','VendorAllReview')->name('vendor.all.review');
 
 
     });
@@ -395,6 +403,14 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
     });
 
+    Route::controller(ReviewController::class)->group(function (){
+        Route::get('pending/review','PendingReview')->name('pending.review');
+        Route::get('review/approve/{id}','ApproveReview')->name('review.approve');
+        Route::get('publish/review','PublishReview')->name('publish.review');
+        Route::get('delete/review/{id}','DeleteReview')->name('delete.review');
+
+    });
+
 
 
 
@@ -435,6 +451,21 @@ Route::get('/coupon-remove',[CartController::class,'CouponRemove']);
 //checkout page
 
 Route::get('/checkout',[CartController::class,'CheckoutCreate'])->name('checkout');
+
+
+//Frontend Blog
+Route::controller(BlogController::class)->group(function (){
+    Route::get('/blog','AllBlog')->name('home.blog');
+    Route::get('post/details/{id}/{slug}','BlogDetails');
+    Route::get('post/category/{id}/{slug}','BlogPostCategory');
+});
+
+
+Route::controller(ReviewController::class)->group(function (){
+    Route::post('store/review','StoreReview')->name('store.review');
+
+});
+
 
 
 
