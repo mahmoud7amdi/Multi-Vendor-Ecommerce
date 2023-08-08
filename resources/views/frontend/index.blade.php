@@ -1,6 +1,9 @@
 
 @extends('frontend.master_dashboard')
 @section('main')
+@section('title')
+   Online Shop
+@endsection
 
 @include('frontend.home.home_slider')
 <!--End hero slider-->
@@ -388,7 +391,7 @@
                                         <div class="product-rating" style="width: 100%"></div>
                                     @endif
                                 </div>
-                                <span class="font-small ml-5 text-muted">{{ count($reviewcount)  }} Reviews/span>
+                                <span class="font-small ml-5 text-muted">{{ count($reviewcount)  }} Reviews</span>
                             </div>
                             @if($product->discount_price == null)
                                 <div class="product-price">

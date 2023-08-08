@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\CouponController ;
 use App\Http\Controllers\Backend\OrderController ;
 use App\Http\Controllers\Backend\ShippingAreaController ;
 use App\Http\Controllers\Backend\ReturnController ;
+use App\Http\Controllers\Backend\SiteSettingController ;
 use App\Http\Controllers\Frontend\IndexController ;
 use App\Http\Controllers\Frontend\CartController ;
 use App\Http\Controllers\User\WishlistController ;
@@ -408,6 +409,17 @@ Route::middleware(['auth','role:admin'])->group(function (){
         Route::get('review/approve/{id}','ApproveReview')->name('review.approve');
         Route::get('publish/review','PublishReview')->name('publish.review');
         Route::get('delete/review/{id}','DeleteReview')->name('delete.review');
+
+    });
+
+
+
+    Route::controller(SiteSettingController::class)->group(function (){
+        Route::get('site/setting','SiteSetting')->name('site.setting');
+        Route::post('site/setting/update','SiteSettingUpdate')->name('site.setting.update');
+        Route::get('seo/setting','SeoSetting')->name('seo.setting');
+        Route::post('/seo/setting/update' , 'SeoSettingUpdate')->name('seo.setting.update');
+
 
     });
 
