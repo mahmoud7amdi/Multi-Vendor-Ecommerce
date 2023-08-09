@@ -92,6 +92,7 @@
 <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}"></script>
 <!-- Template  JS -->
 <script src="{{ asset('frontend/assets/js/main.js?v=5.3') }}"></script>
+<script src="{{ asset('frontend/assets/js/script.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/shop.js?v=5.3') }}"></script>
 <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 {{--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}

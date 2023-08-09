@@ -481,6 +481,15 @@ Route::controller(ReviewController::class)->group(function (){
 });
 
 
+//Search
+
+Route::controller(IndexController::class)->group(function (){
+    Route::post('/search','ProductSearch')->name('product.search');
+    Route::post('/search-product','SearchProduct');
+
+});
+
+
 
 
 
