@@ -228,6 +228,8 @@ Route::middleware(['auth','role:admin'])->group(function (){
         Route::get('product/inactive/{id}','ProductInactive')->name('product.inactive');
         Route::get('product/active/{id}','ProductActive')->name('product.active');
         Route::get('product/delete/{id}','ProductDelete')->name('delete.product');
+        Route::get('product/stock','ProductStock')->name('product.stock');
+
 
 
 
@@ -536,7 +538,8 @@ Route::middleware(['auth','role:user'])->group(function (){
         Route::get('user/invoice_download/{order_id}','UserOrderInvoice') ;
         Route::post('return/order/{order_id}','ReturnOrder')->name('return.order');
         Route::get('return/order/Page','ReturnOrderPage')->name('return.order.page');
-
+        Route::get('user/track/order','UserTrackOrder')->name('user.track.order');
+        Route::post('order/tracking','OrderTracking')->name('order.tracking');
 
     });
 

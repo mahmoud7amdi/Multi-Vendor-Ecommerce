@@ -263,4 +263,12 @@ class PeoductController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+
+
+    public function ProductStock(){
+
+        $products = Product::latest()->get();
+        return view('backend.product.product_stock',compact('products'));
+
+    }
 }
