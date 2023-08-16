@@ -23,7 +23,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontend/assets/imgs/theme/favicon.svg') }}" />
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/animate.min.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" media="all" />
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css?v=5.3') }}" />
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/slider-range.css') }}" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 </head>
 
@@ -81,6 +83,7 @@
 <script src="{{ asset('frontend/assets/js/plugins/perfect-scrollbar.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/plugins/magnific-popup.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/plugins/select2.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
 <script src="{{ asset('frontend/assets/js/plugins/counterup.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/plugins/jquery.countdown.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/plugins/images-loaded.js') }}"></script>
