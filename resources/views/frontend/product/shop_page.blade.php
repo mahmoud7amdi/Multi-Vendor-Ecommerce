@@ -26,7 +26,7 @@
             <div class="col-lg-4-5">
                 <div class="shop-product-fillter">
                     <div class="totall-product">
-                        <p>We found <strong class="text-brand"></strong> items for you!</p>
+                        <p>We found <strong class="text-brand">{{ count($products) }}</strong> items for you!</p>
                     </div>
                     <div class="sort-by-product-area">
                         <div class="sort-by-cover mr-10">
@@ -213,11 +213,11 @@
                             <label class="fw-900">Category</label>
                             @foreach($categories as $category)
                                 @php
-                                    $products = \App\Models\Product::where('category_id',$category->id)->get();
+                                    $products = App\Models\Product::where('category_id',$category->id)->get();
                                 @endphp
                             <div class="custome-checkbox">
                                 <input class="form-check-input" type="checkbox" name="category[]" id="exampleCheckbox{{ $category->id }}" value="{{ $category->category_slug }}"  @if(!empty($filterCat) && in_array($category->category_slug,$filterCat)) checked @endif onchange="this.form.submit()" />
-                                <label class="form-check-label" for="exampleCheckbox{{ $category->id }}"><span>{{ $category->category_name }} </span></label>
+                                <label class="form-check-label" for="exampleCheckbox{{ $category->id }}"><span>{{ $category->category_name }}  ({{ count($products) }})</span></label>
                             </div>
                             @endforeach
 

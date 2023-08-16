@@ -61,6 +61,8 @@
         </li>
         @endif
 
+
+        @if(Auth::user()->can('subcategory.menu'))
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="bx bx-category"></i>
@@ -75,6 +77,7 @@
 
             </ul>
         </li>
+        @endif
 
         <li>
             <a href="javascript:;" class="has-arrow">
