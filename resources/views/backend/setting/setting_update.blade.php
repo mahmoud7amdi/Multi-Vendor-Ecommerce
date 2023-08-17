@@ -174,3 +174,27 @@
 
 
 @endsection
+
+
+$table->id();
+$table->unsignedBigInteger('order_id');
+$table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+$table->unsignedBigInteger('product_id');
+$table->string('vendor_id')->nullable();
+$table->string('color')->nullable();
+$table->string('size')->nullable();
+$table->string('qty');
+$table->float('price',8,2);
+$table->timestamps();
+
+
+protected $guarded = [];
+public function order()
+{
+return $this->belongsTo(Order::class,'order_id','id');
+}
+
+public function product()
+{
+return $this->belongsTo(Product::class,'product_id','id');
+}

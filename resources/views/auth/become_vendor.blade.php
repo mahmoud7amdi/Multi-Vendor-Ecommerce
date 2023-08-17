@@ -49,7 +49,7 @@
                                             <input type="text" required="" id="name" name="name" placeholder="Shop Name" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" required="" id="username" name="username" placeholder="USer Name" />
+                                            <input type="text" required="" id="username" name="username" placeholder="User Name" />
                                         </div>
                                         <div class="form-group">
                                             <input type="email" id="email" required="" name="email" placeholder="Email" />
